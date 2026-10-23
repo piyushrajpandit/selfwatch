@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoiseFit Chrome — Open Companion</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <h1>NoiseFit <span class="badge">Open</span></h1>
+          <p class="subtext">ColorFit Chrome • V1.2.6</p>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" id="nav-dashboard">
+          <span class="icon">📊</span> Dashboard
+        </button>
+        <button class="nav-item" id="nav-wallpaper">
+          <span class="icon">🖼️</span> Custom Wallpaper
+        </button>
+        <button class="nav-item" id="nav-controls">
+          <span class="icon">🎮</span> Watch Controls
+        </button>
+        <button class="nav-item" id="nav-console">
+          <span class="icon">💻</span> Protocol Console
+        </button>
+      </nav>
+
+      <div class="device-status-card">
+        <div class="status-header">
+          <span class="status-indicator" id="status-indicator"></span>
+          <span class="status-label" id="status-label">Disconnected</span>
+        </div>
+        <p class="device-target-name">Noise ColorFit Chrome</p>
+        <button class="btn btn-primary" id="btn-connect">
+          <span class="btn-icon">📶</span> Connect via Bluetooth
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="page-title">
+          <h2>Companion Dashboard</h2>
+          <p>Real-time telemetry and reverse-engineered GATT protocol controller</p>
+        </div>
+        <div class="battery-chip" id="battery-chip">
+          <span class="bat-icon">🔋</span>
+          <span class="bat-pct" id="battery-pct">-- %</span>
+        </div>
+      </header>
+
+      <!-- Custom Wallpaper Studio Section -->
+      <section class="card wallpaper-studio-card" id="wallpaper-section">
+        <div class="card-header">
+          <div>
+            <h3>Custom Wallpaper Studio</h3>
+            <p class="section-subtitle">Crop, customize layout, and flash directly to your ColorFit Chrome</p>
+          </div>
+          <span class="metric-tag">Opcodes 40101 / 40102</span>
+        </div>
+        <div class="wallpaper-studio-grid">
+          <!-- Watch Frame Preview -->
+          <div class="watch-mockup-wrapper">
+            <div class="watch-case">
+              <div class="watch-screen" id="watch-screen" style="background-image: url('wallpaper_watch.png');">
+                <div class="watch-overlay-clock" id="clock-overlay">
+                  <div class="clock-time" id="preview-time">10:48</div>
+                  <div class="clock-date" id="preview-date">SUN 18 OCT</div>
+                  <div class="clock-stats">
+                    <span>❤️ 74</span>
+                    <span>👟 6,840</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="mockup-caption">Live Watch Display Preview (390 × 450 px)</p>
+          </div>
+
+          <!-- Controls & Flash -->
+          <div class="wallpaper-controls">
+            <div class="control-group">
+              <label>Clock Position</label>
+              <div class="btn-group">
+                <button class="choice-btn active" data-pos="top">Top</button>
+                <button class="choice-btn" data-pos="center">Center</button>
+                <button class="choice-btn" data-pos="bottom">Bottom</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label>Text Theme Color</label>
+              <div class="btn-group color-choices">
+                <button class="color-btn active" data-color="#00f2fe" style="background: #00f2fe;"></button>
+                <button class="color-btn" data-color="#ffffff" style="background: #ffffff;"></button>
+                <button class="color-btn" data-color="#ff0844" style="background: #ff0844;"></button>
+                <button class="color-btn" data-color="#f59e0b" style="background: #f59e0b;"></button>
+                <button class="color-btn" data-color="#00f260" style="background: #00f260;"></button>
+              </div>
+            </div>
+
+            <div class="upload-progress-wrapper" id="upload-progress-wrapper" style="display: none;">
+              <div class="progress-labels">
+                <span id="upload-status-text">Uploading image chunks...</span>
+                <span id="upload-pct">0%</span>
+              </div>
+              <div class="bar-progress-container">
+                <div class="bar-progress-fill" id="upload-bar-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" id="btn-flash-wallpaper">
+              <span class="btn-icon">⚡</span> Flash Wallpaper to Watch
+            </button>
+          </div>
+        </div>
+      </section>
+      <section class="metrics-grid">
+        <!-- Steps Card -->
+        <div class="card metric-card steps-card">
+          <div class="card-header">
+            <span class="metric-title">Daily Steps</span>
+            <span class="metric-tag">Opcode 30300</span>
+          </div>
+          <div class="card-body">
+            <div class="circular-progress">
+              <svg viewBox="0 0 100 100">
+                <circle class="bg" cx="50" cy="50" r="42"></circle>
+                <circle class="progress" id="steps-ring" cx="50" cy="50" r="42"></circle>
+              </svg>
+              <div class="progress-inner">
+                <span class="metric-value" id="val-steps">6,420</span>
+                <span class="metric-unit">/ 10,000 steps</span>
+              </div>
+            </div>
+            <div class="metric-stats">
+              <div>
+                <span class="stat-label">Calories</span>
+                <span class="stat-val" id="val-calories">312 kcal</span>
+              </div>
+              <div>
+                <span class="stat-label">Distance</span>
+                <span class="stat-val" id="val-distance">4.8 km</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heart Rate Card -->
+        <div class="card metric-card hr-card">
+          <div class="card-header">
+            <span class="metric-title">Heart Rate</span>
+            <span class="metric-tag pulse-tag">Opcode 30500</span>
+          </div>
+          <div class="card-body">
+            <div class="hr-display">
+              <span class="hr-heart">❤️</span>
+              <span class="metric-value big" id="val-hr">74</span>
+              <span class="metric-unit">BPM</span>
+            </div>
+            <div class="ecg-visualizer">
+              <svg class="ecg-line" viewBox="0 0 300 60" preserveAspectRatio="none">
+                <path d="M0,30 L60,30 L75,10 L90,50 L105,20 L120,40 L135,30 L200,30 L215,8 L230,52 L245,22 L260,38 L275,30 L300,30" />
+              </svg>
+            </div>
+            <div class="hr-zones">
+              <span class="zone-badge">Resting: 68-75</span>
+              <span class="zone-badge active">Normal Rhythm</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SpO2 Blood Oxygen -->
+        <div class="card metric-card spo2-card">
+          <div class="card-header">
+            <span class="metric-title">Blood Oxygen (SpO2)</span>
+            <span class="metric-tag">Opcode 30701</span>
+          </div>
+          <div class="card-body">
+            <div class="spo2-display">
+              <span class="metric-value big" id="val-spo2">98</span>
+              <span class="metric-unit">%</span>
+            </div>
+            <div class="bar-progress-container">
+              <div class="bar-progress-fill" style="width: 98%;"></div>
+            </div>
+            <p class="spo2-status">Optimal Oxygenation Level</p>
+          </div>
+        </div>
+
+        <!-- Sleep Tracking -->
+        <div class="card metric-card sleep-card">
+          <div class="card-header">
+            <span class="metric-title">Sleep Stages</span>
+            <span class="metric-tag">Opcode 30100</span>
+          </div>
+          <div class="card-body">
+            <div class="sleep-summary">
+              <span class="metric-value big" id="val-sleep">7h 45m</span>
+              <span class="metric-unit">Total Sleep</span>
+            </div>
+            <div class="sleep-bars">
+              <div class="sleep-seg deep" style="width: 25%;" title="Deep: 1h 56m"></div>
+              <div class="sleep-seg light" style="width: 50%;" title="Light: 3h 52m"></div>
+              <div class="sleep-seg rem" style="width: 15%;" title="REM: 1h 10m"></div>
+              <div class="sleep-seg awake" style="width: 10%;" title="Awake: 47m"></div>
+            </div>
+            <div class="sleep-legend">
+              <span><i class="dot deep"></i> Deep 25%</span>
+              <span><i class="dot light"></i> Light 50%</span>
+              <span><i class="dot rem"></i> REM 15%</span>
+              <span><i class="dot awake"></i> Awake 10%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions / Commands Section -->
+      <section class="card controls-card">
+        <div class="card-header">
+          <h3>Quick Watch Controls</h3>
+          <span class="metric-tag">Real-Time Dispatch</span>
+        </div>
+        <div class="controls-grid">
+          <button class="action-btn" id="btn-find-watch">
+            <span class="act-icon">🔔</span>
+            <span class="act-title">Find Watch</span>
+            <span class="act-desc">Vibrate watch (Opcode 20100)</span>
+          </button>
+
+          <button class="action-btn" id="btn-sync-steps">
+            <span class="act-icon">🔄</span>
+            <span class="act-title">Sync Fitness</span>
+            <span class="act-desc">Pull daily totals (Opcode 30300)</span>
+          </button>
+
+          <button class="action-btn" id="btn-check-battery">
+            <span class="act-icon">⚡</span>
+            <span class="act-title">Query Battery</span>
+            <span class="act-desc">Fetch power level (Opcode 20300)</span>
+          </button>
+
+          <button class="action-btn" id="btn-weather-sync">
+            <span class="act-icon">☀️</span>
+            <span class="act-title">Push Weather</span>
+            <span class="act-desc">Send forecast (Opcode 20800)</span>
+          </button>
+
+          <button class="action-btn" id="btn-handshake">
+            <span class="act-icon">🤝</span>
+            <span class="act-title">PersimWear Handshake</span>
+            <span class="act-desc">Execute _link_up & _ping</span>
+          </button>
+
+          <button class="action-btn" id="btn-apply-album">
+            <span class="act-icon">🎨</span>
+            <span class="act-title">Switch to Album Dial</span>
+            <span class="act-desc">Apply ID 60001001</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Protocol Inspector / Live Terminal -->
+      <section class="card console-card">
+        <div class="card-header">
+          <h3>QCTeam & Protobuf Packet Console</h3>
+          <button class="btn btn-secondary btn-sm" id="btn-clear-console">Clear</button>
+        </div>
+        <div class="terminal-body" id="console-output">
+          <div class="log-line info">[INIT] System ready. Target: Noise ColorFit Chrome (V1.2.6).</div>
+          <div class="log-line info">[PROTOCOL] QCTeam RTT & com.noise.wear protobuf drivers loaded.</div>
+          <div class="log-line pending">[BLUETOOTH] Click "Connect via Bluetooth" to pair directly in browser.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

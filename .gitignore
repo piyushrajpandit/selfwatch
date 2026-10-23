@@ -1,0 +1,8 @@
+# Large binary files & Decompiled dumps (exceeding GitHub limits)
+apk/
+*.apk
+decompiled/
+decompiled_app/
+captures/
+.agents/
+.DS_Store

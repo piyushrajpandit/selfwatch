@@ -1,0 +1,54 @@
+{
+  "frame_version": 1,
+  "dial_version": 1,
+  "name": "custom_wallpaper",
+  "preview": "preview_0565.bmp",
+  "dial_type": 1,
+  "resolution_ratio": "390x450",
+  "platform": "ats3085s",
+  "size": 300,
+  "compress_size": 0,
+  "enable_pic_compress": 0,
+  "describe_name": "custom_wallpaper",
+  "item": [
+    {
+      "widget": "image",
+      "type": "background",
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 450,
+      "img": "background"
+    },
+    {
+      "widget": "text",
+      "type": "time",
+      "serial_number": 13,
+      "x": 58,
+      "y": 40,
+      "w": 273,
+      "h": 60,
+      "fontnum": 11,
+      "font": "Time",
+      "enable_font": 0,
+      "min_numwidth": 2,
+      "align": "center",
+      "color": "#00F2FE"
+    },
+    {
+      "widget": "text",
+      "type": "day",
+      "serial_number": 3,
+      "x": 97,
+      "y": 105,
+      "w": 60,
+      "h": 30,
+      "fontnum": 10,
+      "font": "Date",
+      "enable_font": 0,
+      "min_numwidth": 2,
+      "align": "center",
+      "color": "#FFFFFF"
+    }
+  ]
+}
